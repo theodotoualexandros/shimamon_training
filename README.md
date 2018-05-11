@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Model diagram
 
-Things you may want to cover:
+Task
 
-* Ruby version
+| Column | Type |
+| --- | --- |
+| ID | serial |
+| name | varchar |
+| description | varchar |
+| deadline | date |
+| priority | varchar |
+| label | varchar |
+| status | integer |
+| creationdatetime | timestamp |
+| updatedatetime | timestamp |
 
-* System dependencies
+User
 
-* Configuration
+| Column | Type
+| --- | --- |
+| ID | serial |
+| username | varchar |
+| password | varchar |
+| creationdatetime | timestamp |
+| updatedatetime | timestamp |
 
-* Database creation
+Status
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Column | Type |
+| --- | --- |
+| ID | serial |
+| name | varchar |
