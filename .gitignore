@@ -30,4 +30,6 @@
 /config/master.key
 
 # vim
-.swp
+*.swp
+
+bin
