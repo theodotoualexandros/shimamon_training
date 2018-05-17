@@ -32,3 +32,11 @@ Status
 | --- | --- |
 | ID | serial |
 | name | varchar |
+
+
+## Deploy
+
+```
+git push heroku master
+heroku run rails db:migrate
+```
