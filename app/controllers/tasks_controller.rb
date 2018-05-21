@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /tasks
   # GET /tasks.json
   def index
     @q = Task.ransack(params[:q])
-    @tasks = @q.result
+    @tasks = @q.result.where(user_id: current_user)
     @tasks = @tasks.page(params[:page]).per(10)
   end
 
