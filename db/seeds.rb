@@ -15,5 +15,10 @@ Status.create([
               description: "description",
               deadline: Date.today,
               status_id: 1,
+              user_id: 1,
               priority: 1)
 end
+
+User.create(email: 'alex@gmail.com',
+                   password: 'topsecret')
+
