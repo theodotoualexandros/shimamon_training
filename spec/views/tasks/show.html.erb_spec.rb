@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "tasks/show", type: :view do
   before(:each) do
-    @task = assign(:task, Task.create!())
+    @task = assign(:task, Task.create!(status_id: 2, name: "ab"))
   end
 
   it "renders attributes in <p>" do
