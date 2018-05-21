@@ -4,5 +4,6 @@ FactoryBot.define do
     description 'description'
     deadline Date.today
     status_id 1
+    priority 1
   end
 end

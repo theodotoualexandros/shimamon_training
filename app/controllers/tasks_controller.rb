@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  helper_method :sort_column, :sort_direction
 
   # GET /tasks
   # GET /tasks.json
@@ -76,7 +75,7 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status_id)
+      params.require(:task).permit(:name, :description, :deadline, :status_id, :priority)
     end
 
 end

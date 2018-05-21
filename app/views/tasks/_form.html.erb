@@ -31,6 +31,11 @@
     <%= form.collection_select :status_id, Status.all, :id, :name %>
   </div>
 
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.text_field :priority %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
