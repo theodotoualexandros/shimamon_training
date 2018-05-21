@@ -9,3 +9,11 @@ Status.create([
   { name: 'not_started' },
   { name: 'started' },
   { name: 'finished' }])
+
+(1..100).each do |i|
+  Task.create(name: "Task #{i}",
+              description: "description",
+              deadline: Date.today,
+              status_id: 1,
+              priority: 1)
+end
