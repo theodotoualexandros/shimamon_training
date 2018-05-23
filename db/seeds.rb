@@ -20,7 +20,9 @@ Status.create([
 end
 
 User.create(email: 'alex@gmail.com',
-                   password: 'topsecret')
+            password: 'topsecret',
+            admin_flg: true)
 User.create(email: 'random@gmail.com',
-                   password: 'topsecret')
+            password: 'topsecret',
+            admin_flg: true)
 
