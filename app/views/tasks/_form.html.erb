@@ -31,6 +31,10 @@
     <%= form.collection_select :status_id, Status.all, :id, :name %>
   </div>
 
+  <div class="field">
+    <%= collection_check_boxes(:task, :label_ids, @labels, :id, :name) %>
+   </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
