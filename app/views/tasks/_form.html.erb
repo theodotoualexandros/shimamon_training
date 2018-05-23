@@ -36,6 +36,10 @@
     <%= form.text_field :priority %>
   </div>
 
+  <div>
+    <%= collection_check_boxes(:task, :label_ids, @labels, :id, :name) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

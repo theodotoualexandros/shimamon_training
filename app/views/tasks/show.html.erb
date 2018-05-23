@@ -25,5 +25,10 @@
   <%= @task.priority %>
 </p>
 
+<p>
+  <strong>Labels:</strong>
+  <%= @task.labels.map {|k| k.name}.join(', ') %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

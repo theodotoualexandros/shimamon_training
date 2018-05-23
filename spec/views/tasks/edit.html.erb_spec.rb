@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "tasks/edit", type: :view do
   before(:each) do
-    @task = assign(:task, Task.create!(status_id: 1, name: "aa"))
+    @task = assign(:task, Task.create!(status_id: 1, name: "aa", user_id: FactoryBot.create(:user).id,
+                                       label_ids: [FactoryBot.create(:label).id]))
+    @labels = @task.labels
   end
 
   it "renders the edit task form" do

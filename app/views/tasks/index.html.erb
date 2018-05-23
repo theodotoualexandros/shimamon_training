@@ -20,7 +20,8 @@
       <th><%= sort_link(@q, :description, "Description") %></th>
       <th><%= sort_link(@q, :deadline, "Deadline") %></th>
       <th><%= sort_link(@q, :status_id, "Status") %></th>
-      <th><%= sort_link(@q, :priority, "Status") %></th>
+      <th><%= sort_link(@q, :priority, "Priority") %></th>
+      <th>Labels</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -34,6 +35,7 @@
         <td><%= task.deadline %></td>
         <td><%= task.status.name %></td>
         <td><%= task.priority %></td>
+        <td><%= task.labels.map {|l| l.name}.join(', ') %></td>
         <td><%= link_to t('general.show'), task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

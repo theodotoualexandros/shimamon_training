@@ -24,6 +24,7 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe TasksController, type: :controller do
+  let(:user) { FactoryBot.create(:user) }
 
   # This should return the minimal set of attributes required to create a valid
   # Task. As you add validations to Task, be sure to
@@ -41,16 +42,33 @@ RSpec.describe TasksController, type: :controller do
   # TasksController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  it "should have a current_user" do
+    sign_in user
+    # note the fact that you should remove the "validate_session" parameter if this was a scaffold-generated controller
+    expect(subject.current_user).to_not eq(nil)
+  end
+
   describe "GET #index" do
-    it "returns a success response" do
-      task = Task.create! valid_attributes
-      get :index, params: {}, session: valid_session
+    it "blocks unauthenticated access" do
+
+      get :index
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "allows authenticated access" do
+      sign_in user
+
+      get :index
+
       expect(response).to be_success
+      sign_out user
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
+      sign_in user
       task = Task.create! valid_attributes
       get :show, params: {id: task.to_param}, session: valid_session
       expect(response).to be_success
@@ -59,6 +77,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
+      sign_in user
       get :new, params: {}, session: valid_session
       expect(response).to be_success
     end
