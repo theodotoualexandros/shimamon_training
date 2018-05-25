@@ -1,17 +1,22 @@
 require "rails_helper"
 
-RSpec.feature "Task management", :type => :feature do
-  let(:user) { create(:user) }
+RSpec.feature "Task management", type: :feature do
+  let(:user) { FactoryBot.create(:user) }
 
   scenario "User creates a new task" do
-    #visit "/tasks/new"
+    login_as(user, :scope => :user)
+    visit "/tasks/new"
 
-    #fill_in I18n.t('tasks.name'), with: "My Name"
-    #expect(page).to have_text("Status")
-    #select "finished", from: 'Status'
-    #click_button I18n.t 'helpers.submit.create'
+    fill_in I18n.t('tasks.name'), with: "My Name"
+    expect(page).to have_text("Status")
+    #select "finished", from: :status # doesn't work for some reason
+    find(:xpath, '//option[contains(text(), "finished")]').select_option
+    check("Label 1")
+    #select '2019/01/01', from: 'Deadline'
+    select_date "2019,6月,1", :from => "Deadline"
+    click_button I18n.t 'helpers.submit.create'
 
-    #expect(page).to have_text("Task was successfully created.")
+    expect(page).to have_text("Task was successfully created.")
   end
 
   scenario "User visits task list" do

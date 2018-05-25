@@ -29,6 +29,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 ActiveRecord::Migration.maintain_test_schema!
 
 require_relative 'support/controller_helpers.rb'
+require_relative 'support/select_date_helper.rb'
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -60,6 +61,12 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   #
   # For Devise >= 4.1.1
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.extend ControllerHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Warden::Test::Helpers
+  config.extend ControllerHelpers, type: :controller
+  config.include SelectDateHelper, type: :feature
+
+  config.after :each do
+    Warden.test_reset!
+  end
 end

@@ -37,7 +37,7 @@
   </div>
 
   <div>
-    <%= collection_check_boxes(:task, :label_ids, @labels, :id, :name) %>
+    <%= collection_check_boxes(:task, :label_ids, Label.all, :id, :name) %>
   </div>
 
   <div class="actions">

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "tasks/new", type: :view do
   before(:each) do
-    assign(:task, Task.new())
+    @task = Task.new
     @labels = Label.all
   end
 

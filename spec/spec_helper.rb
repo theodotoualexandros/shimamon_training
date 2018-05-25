@@ -97,9 +97,7 @@ RSpec.configure do |config|
 =end
 
    config.before(:suite) do
-     FactoryBot.create(:status)
-     FactoryBot.create(:status)
-     FactoryBot.create(:status)
-     FactoryBot.create(:status)
+     DatabaseCleaner.clean_with(:truncation)
+     require "#{Rails.root}/db/seeds.rb"
    end
 end
