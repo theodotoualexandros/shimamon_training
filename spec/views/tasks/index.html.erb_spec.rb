@@ -1,15 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "tasks/index", type: :view do
-  #before(:each) do
-    #assign(:tasks, [
-      #Task.create!(status_id: 1, name: "aw"),
-      #Task.create!(status_id: 2, name: "aa")
-    #])
-  #end
+  let(:user) { FactoryBot.create(:user) }
+  let(:q) { Task.ransack(params[:q]) }
+  let(:tasks) { q.result.where(user_id: user.id) }
+  before(:each) do
+    assign(:tasks, [
+      FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, user_id: user.id)
+    ])
+    assign(:q, q)
+  end
 
-  #it "renders a list of tasks" do
-    #render
-  #end
-  # TODO
+  it "renders a list of tasks" do
+    assign(:tasks, tasks.page(params[:page]).per(10))
+    login_as(user, :scope => :user)
+    render
+  end
 end

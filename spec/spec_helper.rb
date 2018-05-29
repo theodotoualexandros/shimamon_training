@@ -100,4 +100,10 @@ RSpec.configure do |config|
      DatabaseCleaner.clean_with(:truncation)
      require "#{Rails.root}/db/seeds.rb"
    end
+
+  RSpec::Matchers.define :appear_before do |later_content|
+    match do |earlier_content|
+      page.body.index(earlier_content) < page.body.index(later_content)
+    end
+  end
 end

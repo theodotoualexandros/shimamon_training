@@ -7,11 +7,11 @@ RSpec.describe TasksController, type: :controller do
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: "task1abc", status_id: 1, user_id: user.id }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { status_id: "aa" }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -38,7 +38,7 @@ RSpec.describe TasksController, type: :controller do
 
       get :index
 
-      expect(response).to be_success
+      expect(response).to be_successful
       sign_out user
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe TasksController, type: :controller do
       sign_in user
       task = Task.create! valid_attributes
       get :show, params: {id: task.to_param}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -56,19 +56,23 @@ RSpec.describe TasksController, type: :controller do
     it "returns a success response" do
       sign_in user
       get :new, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe "GET #edit" do
     it "returns a success response" do
+      sign_in user
       task = Task.create! valid_attributes
       get :edit, params: {id: task.to_param}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
+   before(:each) do
+     sign_in user
+   end
     context "with valid params" do
       it "creates a new Task" do
         expect {
@@ -85,22 +89,25 @@ RSpec.describe TasksController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {task: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
 
   describe "PUT #update" do
+    before(:each) do
+      sign_in user
+    end
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "task2abc", status_id: 2, deadline: Date.new, user_id: user.id }
       }
 
       it "updates the requested task" do
         task = Task.create! valid_attributes
         put :update, params: {id: task.to_param, task: new_attributes}, session: valid_session
         task.reload
-        skip("Add assertions for updated state")
+         expect(assigns(:task).attributes.symbolize_keys[:name]).to eq(new_attributes[:name])
       end
 
       it "redirects to the task" do
@@ -114,12 +121,15 @@ RSpec.describe TasksController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         task = Task.create! valid_attributes
         put :update, params: {id: task.to_param, task: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
 
   describe "DELETE #destroy" do
+    before(:each) do
+      sign_in user
+    end
     it "destroys the requested task" do
       task = Task.create! valid_attributes
       expect {

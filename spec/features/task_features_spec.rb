@@ -20,20 +20,40 @@ RSpec.feature "Task management", type: :feature do
   end
 
   scenario "User visits task list" do
-    user = FactoryBot.create(:user)
+    login_as(user, :scope => :user)
     task1 = FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, user_id: user.id)
     task2 = FactoryBot.create(:task, name: "task2", deadline: "2018-05-15", status_id: 2, user_id: user.id)
     task3 = FactoryBot.create(:task, name: "task3", deadline: "2018-05-16", status_id: 3, user_id: user.id)
     created_tasks = [task1, task2, task3]
     visit "/tasks"
-    # TODO
+    expect(page).to have_link('New Task', href: new_task_path)
 
   end
 
   scenario "User searches for task" do
+    task1 = FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, user_id: user.id)
+    login_as(user, :scope => :user)
+
+    visit "/tasks"
+    fill_in 'q_name_cont', with: "task"
+    select'finished', from: 'q_status_id_eq' 
+    click_button '検索'
+    expect(page).to_not have_text('task1')
+    fill_in 'q_name_cont', with: "task"
+    select 'not_started', from: 'q_status_id_eq' 
+    click_button '検索'
+    expect(page).to have_text('task1')
+
   end
 
   scenario "User sorts tasks" do
+    task1 = FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, user_id: user.id)
+    task2 = FactoryBot.create(:task, name: "task2", deadline: "2018-05-14", status_id: 1, user_id: user.id)
+    login_as(user, scope: :user)
+    visit "/tasks"
+    click_on 'Name'
+    expect('task1').to appear_before('task2')
+    click_on 'Name'
+    expect('task2').to appear_before('task1')
   end
-
 end
