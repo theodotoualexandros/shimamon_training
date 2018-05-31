@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :tasks, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  acts_as_reader
 
   private
     def check_if_last_user

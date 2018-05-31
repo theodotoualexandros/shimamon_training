@@ -10,6 +10,10 @@ Status.create!([
   { name: 'started' },
   { name: 'finished' }])
 
+NotificationType.create!([
+  { name: 'deadline_approaching', msg: 'Deadline approaching' },
+  { name: 'deadline_past', msg:'Deadline past' }])
+
 User.create!(email: 'alex@gmail.com',
             password: 'topsecret',
             admin_flg: true)
