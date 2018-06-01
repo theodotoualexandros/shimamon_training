@@ -5,4 +5,5 @@ class Task < ApplicationRecord
   validates_length_of :name, :maximum => 12
   validates_presence_of :status
   validates :name, presence: true
+  validates_presence_of :deadline
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "tasks/edit", type: :view do
   before(:each) do
     @task = assign(:task, Task.create!(status_id: 1, name: "aa", user_id: FactoryBot.create(:user).id,
-                                       label_ids: [FactoryBot.create(:label).id]))
+                                       label_ids: [FactoryBot.create(:label).id], deadline: Date.today))
     @labels = @task.labels
   end
 
