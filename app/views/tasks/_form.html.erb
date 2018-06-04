@@ -37,7 +37,13 @@
   </div>
 
   <div>
+    <%= form.label :labels %>
     <%= collection_check_boxes(:task, :label_ids, Label.all, :id, :name) %>
+  </div>
+
+  <div>
+    <%= form.label :users %>
+    <%= collection_check_boxes(:task, :user_ids, User.all, :id, :email) %>
   </div>
 
   <div class="actions">

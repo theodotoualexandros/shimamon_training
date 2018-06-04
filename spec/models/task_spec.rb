@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, :type => :model do
   it "is valid with valid attributes" do
-    expect(Task.new(status_id: 1, name: 'name', user_id: FactoryBot.create(:user).id, deadline: Date.today)).to be_valid
+    expect(Task.new(status_id: 1, name: 'name', creator_id: FactoryBot.create(:user).id, deadline: Date.today)).to be_valid
   end
 
   it "is not valid when name is > 12" do

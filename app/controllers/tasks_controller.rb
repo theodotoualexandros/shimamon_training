@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @q = Task.ransack(params[:q])
-    @tasks = @q.result.where(user_id: current_user)
+    @tasks = @q.result.includes(:users).where(users: { id: current_user.id } )
     @tasks = @tasks.page(params[:page]).per(10)
     if (!current_user.nil?)
       @tasks.each do |task|
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-    @task.user_id = current_user.id
+    @task.creator_id = current_user.id
 
     respond_to do |format|
       if @task.valid?
@@ -98,7 +98,7 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status_id, :priority, {label_ids: []})
+      params.require(:task).permit(:name, :description, :deadline, :status_id, :priority, {label_ids: []}, {user_ids: []})
     end
 
 end

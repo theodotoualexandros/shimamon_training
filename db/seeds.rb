@@ -26,13 +26,15 @@ User.create!(email: 'random@gmail.com',
 end
 
 labels = Label.all.ids
+users = User.all.ids
 
 (1..100).each do |i|
   Task.create!(name: "Task #{i}",
               description: "description",
               deadline: Date.today,
               status_id: 1,
-              user_id: 1 + rand(2),
+              user_ids: users,
+              creator_id: 1 + rand(2),
               label_ids: labels,
               priority: 1)
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_31_075427) do
+ActiveRecord::Schema.define(version: 2018_06_04_090334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,9 +90,14 @@ ActiveRecord::Schema.define(version: 2018_05_31_075427) do
     t.date "deadline"
     t.bigint "status_id"
     t.integer "priority"
-    t.bigint "user_id"
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["status_id"], name: "index_tasks_on_status_id"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "tasks_users", id: false, force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -117,5 +122,5 @@ ActiveRecord::Schema.define(version: 2018_05_31_075427) do
   add_foreign_key "notifications", "tasks"
   add_foreign_key "notifications", "users"
   add_foreign_key "tasks", "statuses"
-  add_foreign_key "tasks", "users"
+  add_foreign_key "tasks", "users", column: "creator_id"
 end
