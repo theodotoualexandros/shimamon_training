@@ -21,9 +21,11 @@
           <%= fa_icon "bell" %>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <% @notifications.each do |notification| %>
-            <a class="dropdown-item" href="<%= read_notification_url(notification.id) %>">
-              <%= "Task #{notification.task.id}: #{notification.notification_type.msg} (#{notification.task.deadline})" %></a>
+          <% if !@notifications.nil? %>
+            <% @notifications.each do |notification| %>
+              <a class="dropdown-item" href="<%= read_notification_url(notification.id) %>">
+                <%= "Task #{notification.task.id}: #{notification.notification_type.msg} (#{notification.task.deadline})" %></a>
+            <% end %>
           <% end %>
       </div>
 </div>
