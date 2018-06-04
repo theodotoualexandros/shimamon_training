@@ -8,6 +8,18 @@ class TasksController < ApplicationController
     @q = Task.ransack(params[:q])
     @tasks = @q.result.where(user_id: current_user)
     @tasks = @tasks.page(params[:page]).per(10)
+    if (!current_user.nil?)
+      @tasks.each do |task|
+        existing_notification = Notification.where(user_id: current_user.id, task_id: task.id)
+        if existing_notification.nil?
+          if (task.deadline < Date.today) then
+            Notification.create!({ user_id: current_user.id, notification_type_id: 2, task_id: task.id})
+          elsif (((Time.zone.now - task.deadline) / 1.day).to_i < 3) then
+            Notification.create!({ user_id: current_user.id, notification_type_id: 1, task_id: task.id})
+          end
+        end
+      end
+    end
   end
 
   # GET /tasks/1
