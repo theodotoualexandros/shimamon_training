@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @q = Task.ransack(params[:q])
-    @tasks = @q.result.includes(:users).where(users: { id: current_user.id } )
+    @tasks = @q.result.includes(:groups).where(groups: { id: current_user.groups.ids } )
     @tasks = @tasks.page(params[:page]).per(10)
     if (!current_user.nil?)
       @tasks.each do |task|
@@ -47,9 +47,9 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.valid?
         if @task.save
-          if @task.deadline < Date.today
-            Notification.create!({ user_id: current_user.id, notification_type_id: 2, task_id: @task.id})
-          end
+          #if @task.deadline < Date.today
+            #Notification.create!({ user_id: current_user.id, notification_type_id: 2, task_id: @task.id})
+          #end
           format.html { redirect_to @task, notice: 'Task was successfully created.' }
           format.json { render :show, status: :created, location: @task }
         else
@@ -68,9 +68,9 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        if @task.deadline < Date.today
-          Notification.create!({ user_id: current_user.id, notification_type_id: 2, task_id: @task.id})
-        end
+        #if @task.deadline < Date.today
+          #Notification.create!({ user_id: current_user.id, notification_type_id: 2, task_id: @task.id})
+        #end
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
       else
@@ -98,7 +98,7 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status_id, :priority, {label_ids: []}, {user_ids: []})
+      params.require(:task).permit(:name, :description, :deadline, :status_id, :priority, {label_ids: []}, {group_ids: []})
     end
 
 end

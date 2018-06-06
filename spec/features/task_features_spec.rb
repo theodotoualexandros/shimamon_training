@@ -21,40 +21,41 @@ RSpec.feature "Task management", type: :feature do
 
   scenario "User visits task list" do
     login_as(user, :scope => :user)
-    task1 = FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, creator_id: user.id)
-    task2 = FactoryBot.create(:task, name: "task2", deadline: "2018-05-15", status_id: 2, creator_id: user.id)
-    task3 = FactoryBot.create(:task, name: "task3", deadline: "2018-05-16", status_id: 3, creator_id: user.id)
-    created_tasks = [task1, task2, task3]
+    FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, creator_id: user.id)
+    FactoryBot.create(:task, name: "task2", deadline: "2018-05-15", status_id: 2, creator_id: user.id)
+    FactoryBot.create(:task, name: "task3", deadline: "2018-05-16", status_id: 3, creator_id: user.id)
     visit "/tasks"
     expect(page).to have_link('New Task', href: new_task_path)
 
   end
 
   scenario "User searches for task" do
-    task1 = FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, creator_id: user.id,
-                              user_ids: User.all.ids)
     login_as(user, :scope => :user)
+    FactoryBot.create(:task, name: "task12", deadline: "2018-05-14", status_id: 1, creator_id: user.id,
+                              group_ids: Group.all.ids)
 
     visit "/tasks"
     fill_in 'q_name_cont', with: "task"
     select'finished', from: 'q_status_id_eq'
     click_button '検索'
-    expect(page).to_not have_text('task1')
-    fill_in 'q_name_cont', with: "task"
+    expect(page).to_not have_text('task12')
+    fill_in 'q_name_cont', with: "task12"
     select 'not_started', from: 'q_status_id_eq'
     click_button '検索'
-    expect(page).to have_text('task1')
+    expect(page).to have_text('task12')
 
   end
 
   scenario "User sorts tasks" do
-    FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, creator_id: user.id, user_ids: User.all.ids)
-    FactoryBot.create(:task, name: "task2", deadline: "2018-05-14", status_id: 1, creator_id: user.id, user_ids: User.all.ids)
+    FactoryBot.create(:task, name: "Atask", deadline: "2018-05-14", status_id: 1, creator_id: user.id, group_ids: Group.all.ids)
+    FactoryBot.create(:task, name: "Btask", deadline: "2018-05-14", status_id: 1, creator_id: user.id, group_ids: Group.all.ids)
+    FactoryBot.create(:task, name: "Ztask", deadline: "2018-05-14", status_id: 1, creator_id: user.id, group_ids: Group.all.ids)
+    FactoryBot.create(:task, name: "Ytask", deadline: "2018-05-14", status_id: 1, creator_id: user.id, group_ids: Group.all.ids)
     login_as(user, scope: :user)
     visit "/tasks"
     click_on 'Name'
-    expect('task1').to appear_before('task2')
+    expect('Atask').to appear_before('Btask')
     click_on 'Name'
-    expect('task2').to appear_before('task1')
+    expect('Ztask').to appear_before('Ytask')
   end
 end

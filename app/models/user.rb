@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :tasks, dependent: :destroy
   has_many :tasks, foreign_key: "creator_id"
   has_many :notifications, dependent: :destroy
+  has_and_belongs_to_many :groups
   acts_as_reader
 
   private

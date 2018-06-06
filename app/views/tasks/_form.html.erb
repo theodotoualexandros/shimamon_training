@@ -42,8 +42,8 @@
   </div>
 
   <div>
-    <%= form.label :users %>
-    <%= collection_check_boxes(:task, :user_ids, User.all, :id, :email) %>
+    <%= form.label :groups %>
+    <%= collection_check_boxes(:task, :group_ids, Group.all, :id, :name) %>
   </div>
 
   <div class="actions">

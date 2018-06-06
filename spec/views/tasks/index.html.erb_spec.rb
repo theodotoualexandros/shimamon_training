@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "tasks/index", type: :view do
   let(:user) { FactoryBot.create(:user) }
   let(:q) { Task.ransack(params[:q]) }
-  let(:tasks) { q.result.includes(:users).where(users: { id: user.id }) }
+  let(:tasks) { q.result.includes(:groups).where(groups: { id: user.groups.ids }) }
   before(:each) do
     assign(:tasks, [
       FactoryBot.create(:task, name: "task1", deadline: "2018-05-14", status_id: 1, creator_id: user.id)
