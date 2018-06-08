@@ -13,6 +13,7 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'factory_bot_rails'
 RSpec.configure do |config|
   #config.extend ControllerMacros, type: :controller
 
