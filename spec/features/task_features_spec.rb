@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Task management", type: :feature do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, group_ids: Group.all.ids) }
 
   scenario "User creates a new task" do
     login_as(user, :scope => :user)
@@ -33,10 +33,9 @@ RSpec.feature "Task management", type: :feature do
     login_as(user, :scope => :user)
     FactoryBot.create(:task, name: "task12", deadline: "2018-05-14", status_id: 1, creator_id: user.id,
                               group_ids: Group.all.ids)
-
     visit "/tasks"
     fill_in 'q_name_cont', with: "task"
-    select'finished', from: 'q_status_id_eq'
+    select 'finished', from: 'q_status_id_eq'
     click_button '検索'
     expect(page).to_not have_text('task12')
     fill_in 'q_name_cont', with: "task12"
