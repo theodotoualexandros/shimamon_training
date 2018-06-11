@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_072816) do
+ActiveRecord::Schema.define(version: 2018_06_11_021715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_072816) do
     t.bigint "status_id", null: false
     t.integer "priority"
     t.bigint "creator_id"
+    t.string "image"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["status_id"], name: "index_tasks_on_status_id"
   end

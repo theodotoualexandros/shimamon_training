@@ -8,4 +8,5 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates_presence_of :deadline
   validates_presence_of :creator
+  mount_uploader :image, ImageUploader
 end

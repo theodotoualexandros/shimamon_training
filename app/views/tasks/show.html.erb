@@ -35,5 +35,10 @@
   <%= @task.groups.map {|k| k.name}.join(', ') %>
 </p>
 
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @task.image.thumb.url %>
+</p>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
