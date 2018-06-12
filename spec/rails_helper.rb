@@ -5,6 +5,7 @@ require 'spec_helper'
 require 'rspec/rails'
 # note: require 'devise' after require 'rspec/rails'
 require 'devise'
+require 'carrierwave_direct'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -63,6 +64,7 @@ RSpec.configure do |config|
   # For Devise >= 4.1.1
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
+  config.include CarrierWaveDirect::Test::CapybaraHelpers
   config.extend ControllerHelpers, type: :controller
   config.include SelectDateHelper, type: :feature
 

@@ -73,6 +73,7 @@ group :test do
   gem 'factory_bot_rails', require: false
   gem 'database_cleaner'
   gem 'rails-controller-testing'
+  gem 'carrierwave_direct'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

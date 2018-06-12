@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_and_belongs_to_many :groups
   acts_as_reader
+  mount_uploader :image, ImageUploader
 
   private
     def check_if_last_user

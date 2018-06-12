@@ -1,0 +1,15 @@
+<%= form_for @profile, url: {action: "update"} do |form| %>
+  <div class="field">
+    <%= form.label :image %><br>
+    <%= form.file_field :image %>
+      <% if form.object.image? %>
+      <%= image_tag form.object.image.thumb.url %>
+      <%= form.label :remove_image %>
+      <%= form.check_box :remove_image %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -14,6 +14,8 @@ RSpec.feature "Task management", type: :feature do
     check("Label 1")
     #select '2019/01/01', from: 'Deadline'
     select_date "2019,6月,1", :from => "Deadline"
+    attach_file 'Image', Rails.root.join('spec', 'support', 'brands', 'logos', '123.jpg')
+    #upload_directly(ImageUploader.new, "Image")
     click_button I18n.t 'helpers.submit.create'
 
     expect(page).to have_text("Task was successfully created.")
