@@ -1,0 +1,8 @@
+<%= month_calendar(attribute: :deadline, events: @tasks) do |date, tasks| %>
+  <%= date.day %>
+  <% tasks.each do |task| %>
+    <div>
+      <%= task.name %>
+    </div>
+  <% end %>
+<% end %>

@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   root 'tasks#index'
 
   get 'profile', to: 'profile#edit'
+  get 'calendar', to: 'calendar#show'
   patch 'profile/update'
 end
